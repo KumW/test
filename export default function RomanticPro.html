@@ -1,0 +1,102 @@
+export default function RomanticProposalApp() {
+  const [accepted, setAccepted] = React.useState(false);
+  const [swap, setSwap] = React.useState(false);
+  const [booked, setBooked] = React.useState(false);
+
+
+  const [month, setMonth] = React.useState('Jan');
+  const [day, setDay] = React.useState('1');
+  const [hour, setHour] = React.useState('12');
+  const [minute, setMinute] = React.useState('00');
+  const [period, setPeriod] = React.useState('PM');
+
+
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+
+  return (
+    <div className='min-h-screen bg-gradient-to-br from-pink-100 via-rose-100 to-red-100 flex items-center justify-center p-6 relative overflow-hidden'>
+      <div className='absolute inset-0 opacity-30'>
+        <div className='absolute top-10 left-10 text-7xl'>🌸</div>
+        <div className='absolute top-20 right-16 text-7xl'>❤️</div>
+        <div className='absolute bottom-16 left-20 text-8xl'>🌹</div>
+        <div className='absolute bottom-20 right-10 text-7xl'>💕</div>
+      </div>
+
+      <div className='bg-white/95 rounded-3xl shadow-2xl p-8 max-w-xl w-full text-center relative z-10'>
+        {!accepted ? (
+          <>
+            <h1 className='text-4xl font-bold text-pink-600 mb-4'>💖 A Special Question 💖</h1>
+            <p className='text-xl mb-8 text-gray-800'>Would you like to go on a date with me? ❤️</p>
+
+
+            <div className='flex justify-center gap-6'>
+              {swap ? (
+                <>
+                  <button onClick={() => setAccepted(true)} className='bg-pink-500 text-white px-8 py-4 rounded-full text-xl'>YES ❤️</button>
+                  <button onMouseEnter={() => setSwap(false)} className='bg-gray-400 text-white px-8 py-4 rounded-full text-xl'>NO 💔</button>
+                </>
+              ) : (
+                <>
+                  <button onMouseEnter={() => setSwap(true)} className='bg-gray-400 text-white px-8 py-4 rounded-full text-xl'>NO 💔</button>
+                  <button onClick={() => setAccepted(true)} className='bg-pink-500 text-white px-8 py-4 rounded-full text-xl'>YES ❤️</button>
+                </>
+              )}
+            </div>
+          </>
+        ) : !booked ? (
+          <>
+            <h2 className='text-3xl font-bold text-pink-600 mb-4'>Yay! 🎉❤️</h2>
+            <p className='mb-6 text-black'>Select your available date and time.</p>
+            <div className='space-y-4 text-left'>
+              <div>
+                <label className='block mb-2 font-medium text-black'>Month</label>
+                <select value={month} onChange={(e)=>setMonth(e.target.value)} className='w-full border rounded-xl p-3 text-black'>
+                  {months.map(m => <option key={m}>{m}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className='block mb-2 font-medium text-black'>Day</label>
+                <select value={day} onChange={(e)=>setDay(e.target.value)} className='w-full border rounded-xl p-3 text-black'>
+                  {Array.from({length:31},(_,i)=>i+1).map(d => <option key={d}>{d}</option>)}
+                </select>
+              </div>
+
+
+              <div>
+                <label className='block mb-2 font-medium text-black'>Time</label>
+                <div className='flex gap-2'>
+                  <select value={hour} onChange={(e)=>setHour(e.target.value)} className='border rounded-xl p-3 text-black'>
+                    {Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0')).map(h => <option key={h}>{h}</option>)}
+                  </select>
+
+                  <select value={minute} onChange={(e)=>setMinute(e.target.value)} className='border rounded-xl p-3 text-black'>
+                    {['00','15','30','45'].map(m => <option key={m}>{m}</option>)}
+                  </select>
+
+                  <select value={period} onChange={(e)=>setPeriod(e.target.value)} className='border rounded-xl p-3 text-black'>
+                    <option>AM</option>
+                    <option>PM</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button onClick={() => setBooked(true)} className='mt-6 bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-semibold'>
+              Book Date ❤️
+            </button>
+          </>
+        ) : (
+          <>
+            <h2 className='text-4xl font-bold text-pink-600 mb-4'>💖 Date Reserved 💖</h2>
+            <p className='text-lg text-black'>See you soon! 🌹✨</p>
+            <p className='mt-4 text-black'>Selected: {day} {month} at {hour}:{minute} {period}</p>
+            <p className='mt-4 text-pink-600 font-semibold'>Can't wait to spend time with you ❤️</p>
+            <p className='text-sm text-gray-600 mt-4'>Note: Email delivery requires a separate backend service.</p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
